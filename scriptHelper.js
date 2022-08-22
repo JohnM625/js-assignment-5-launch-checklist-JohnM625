@@ -4,7 +4,7 @@ require('isomorphic-fetch');
 function addDestinationInfo(document, name, diameter, star, distance, moons, imageUrl) {
 let html = `<h2>Mission Destination</h2>\
 <ol>\
-    <li>Name: ${name}</li>6\
+    <li>Name: ${name}</li>\
     <li>Diameter: ${diameter} </li>\
     <li>Star: ${star}</li>\
     <li>Distance from Earth: ${distance} </li>\
@@ -25,7 +25,6 @@ function validateInput(testInput) {
    }
 }
 function formSubmission(document, list, pilot, copilot, fuelLevel, cargoLevel) {
-    this.event.preventDefault();
 
             if (validateInput(pilot) === "Empty" || validateInput(copilot) === "Empty" || validateInput(fuelLevel) === "Empty" || validateInput(cargoLevel) === "Empty") {
             alert("All fields are required!");
@@ -34,9 +33,9 @@ function formSubmission(document, list, pilot, copilot, fuelLevel, cargoLevel) {
             } else if  (validateInput(pilot) === "Is a Number" || validateInput(copilot) === "Is a Number" || validateInput(fuelLevel) === "Not a Number" || validateInput(cargoLevel) === "Not a Number") { 
                 alert("Please only enter strings for the Pilot and Co-pilot fields and numbers for the Fuel and Cargo fields.");
             }
-                pilotStatus.innerHTML = `Pilot ${pilot} Ready`
-                copilotStatus.innerHTML = `Co-pilot ${copilot} Ready`
-                document.getElementById("launchStatus").innerHTML = ("Shuttle is ready for launch");
+                document.getElementById("pilotStatus").innerHTML = `Pilot ${pilot} Ready`
+                document.getElementById("copilotStatus").innerHTML = `Co-pilot ${copilot} Ready`
+                document.getElementById("launchStatus").innerHTML = ("Shuttle is Ready for Launch");
                 document.getElementById("launchStatus").style.color = "green";
                 if (fuelLevel < 10000) {
                     document.getElementById("faultyItems").style.visibility ="visible";
@@ -47,7 +46,7 @@ function formSubmission(document, list, pilot, copilot, fuelLevel, cargoLevel) {
                 if (cargoLevel > 10000) {
                     document.getElementById("faultyItems").style.visibility ="visible";
                     document.getElementById("launchStatus").innerHTML = ("Shuttle not ready for launch");
-                     document.getElementById("cargoStatus").innerHTML = ("There is too much mass for the shuttle to take off.");
+                     document.getElementById("cargoStatus").innerHTML = ("Cargo mass low enough for launch.");
                     document.getElementById("launchStatus").style.color = "red";
                 }
             
@@ -55,7 +54,7 @@ function formSubmission(document, list, pilot, copilot, fuelLevel, cargoLevel) {
 
 async function myFetch(url) {
     let planetsReturned;
-    planetsReturned = await fetch(url).then( function(response) {
+    planetsReturned = await fetch("https://handlers.education.launchcode.org/static/planets.json").then( function(response) {
     return (response.json());
     });
 
